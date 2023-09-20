@@ -4,6 +4,7 @@ import win32print
 import win32api
 import os
 import PyPDF2
+import tkinter as tk
 
 # Definindo o caminho de impressão
 CAMINHO_ARQUIVO = r"C:\Users\Tecnologia\Desktop\Python\Projeto Impressão\Imprimir"
