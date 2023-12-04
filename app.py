@@ -1,7 +1,7 @@
 # Imprimir varios arquivos diretamente
 
-import win32print
-import win32api
+from win32 import win32print
+from win32 import win32api
 import os
 import PyPDF2
 
@@ -43,15 +43,31 @@ for arquivo in os.listdir(CAMINHO_ARQUIVO):
         selecionar_paginas(pdf_path, CAMINHO_NOVO, 1)
 
 
-# escolhendo a impressora padrão
+# Listando as impressoras disponiveis:
 lista_printers = win32print.EnumPrinters(2)
-impressora = lista_printers[10]
-win32print.SetDefaultPrinter(impressora[2])
 
+for i, printer in enumerate(lista_printers):
+    print(i, printer)
 
-# Imprimindo os arquivos
-lista_arquivos = os.listdir(CAMINHO_NOVO)
+print('\n')
+menu_impressora = input('Digite o numero da impressora desejada: ')
+print('\n')
 
-for arquivo in enumerate(lista_arquivos):
-    win32api.ShellExecute(0, "print", arquivo[1], '', CAMINHO_NOVO, 0)
-    print(f'Impressão conluida n° {str(arquivo)}')
+if menu_impressora.isdigit() == True:
+
+    digito_impressora = int(menu_impressora)
+
+    # escolhendo a impressora padrão
+    impressora = lista_printers[digito_impressora]
+    win32print.SetDefaultPrinter(impressora[2])
+
+    # Imprimindo os arquivos
+    lista_arquivos = os.listdir(CAMINHO_NOVO)
+
+    for i, arquivo in enumerate(lista_arquivos):
+        print(arquivo)
+        win32api.ShellExecute(0, "print", arquivo, '', CAMINHO_NOVO, 0)
+        print(f'Impressão conluida n° {str(arquivo)}')
+
+else:
+    print('Digite um numero inteiro')
